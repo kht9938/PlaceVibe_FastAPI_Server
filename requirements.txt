@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+torch
+librosa
+numpy
+requests
+python-multipart
+scipy
+aiofiles
