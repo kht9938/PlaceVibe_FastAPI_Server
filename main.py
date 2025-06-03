@@ -121,7 +121,7 @@ def search_all_categories(lat, lon):
         "AT4": "관광명소", "AD5": "숙박", "FD6": "음식점", "CE7": "카페",
         "HP8": "병원", "PM9": "약국"
     }
-
+    
     nearest = None
 
     for code, name in category_codes.items():
@@ -139,12 +139,18 @@ def search_all_categories(lat, lon):
             if docs:
                 doc = docs[0]
                 distance = int(doc["distance"])
-                if nearest is None or distance < nearest["distance"]:
-                    nearest = {"category": name, "distance": distance}
+                place_name = doc.get("place_name", "이름 없음")
 
+                if nearest is None or distance < nearest["distance"]:
+                    nearest = {
+                        "category": name,
+                        "distance": distance,
+                        "place_name": place_name
+                    }
+
+    # 디버깅 출력
     if nearest:
-        print(f"가장 가까운 카테고리: {nearest['category']} ({nearest['distance']}m 이내)")
-        return nearest["category"]
+        print(f"가장 가까운 장소: {nearest['place_name']} ({nearest['category']}, {nearest['distance']}m 이내)")
     else:
         print("반경 내에 장소 없음")
         return None
